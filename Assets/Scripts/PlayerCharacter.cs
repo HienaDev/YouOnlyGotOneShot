@@ -52,11 +52,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private Quaternion requestedRotation;
     private Vector3 requestedMovement;
     private bool requestedJump;
-    private bool requestedCrouch;   
+    private bool requestedCrouch;
+
+    private Collider[] uncrouchOverlapResults;
 
     public void Initialize()
     {
         stance = Stance.Stand;
+        uncrouchOverlapResults = new Collider[8];
 
         motor.CharacterController = this;
     }
@@ -163,6 +166,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         // to not uncrouch into ceilings
         if (!requestedCrouch && stance is not Stance.Stand)
         {
+            //Tentaively "standup" the character capsule
             stance = Stance.Stand;
             motor.SetCapsuleDimensions
             (
@@ -170,6 +174,30 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                 height: standHeight,
                 yOffset: standHeight * 0.5f
             );
+
+            // Then see if the capsule overlaps any colliders before actually
+            // allowing the character to standup
+            var pos = motor.TransientPosition;
+            var rot = motor.TransientRotation;
+            var mask = motor.CollidableLayers;
+            if (motor.CharacterOverlap(pos, rot, uncrouchOverlapResults, mask, QueryTriggerInteraction.Ignore) > 0)
+            {
+                // This method CharacterOverlap returns the number of detected overlaps
+                // if it's greater than 0, we cant uncrouch, so we revert the stance back to crouch
+                // Re-crouch
+                requestedCrouch = true;
+                motor.SetCapsuleDimensions
+                (
+                    radius: motor.Capsule.radius,
+                    height: crouchHeight,
+                    yOffset: crouchHeight * 0.5f
+                );
+            }
+            else
+            {
+                // If there are no overlaps, we can safely uncrouch
+                stance = Stance.Stand;
+            }
         }
     }
 
