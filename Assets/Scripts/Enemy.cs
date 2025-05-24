@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private ParticleSystem deathEffect;
 
-    private JiggleRigBuilder jiggleRigBuilder;
+    [SerializeField] private JiggleRigBuilder jiggleRigBuilder;
     [SerializeField] private JiggleSettings deadJiggle;
     private LeftRightMover leftRightMover;
 
@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        jiggleRigBuilder = GetComponent<JiggleRigBuilder>();
+        if(jiggleRigBuilder == null)
+            jiggleRigBuilder = GetComponent<JiggleRigBuilder>();
         leftRightMover = GetComponent<LeftRightMover>();
     }
 
