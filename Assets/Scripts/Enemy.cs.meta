@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d00488db3e1d5cc41a3e0835c5ed72bc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - deathEffect: {fileID: 5217436385580422697, guid: 9e391cd07d0abc042ae3e3332984e2ce, type: 3}
+  - deadJiggle: {fileID: 11400000, guid: 31a226ef00487e94f91b934211205f8c, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cute tentacle creature
+* source:	https://sketchfab.com/3d-models/cute-tentacle-creature-2aec23f475dc4c93a6353fa7052d15d2
+* author:	endike (https://sketchfab.com/endike)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cute tentacle creature" (https://sketchfab.com/3d-models/cute-tentacle-creature-2aec23f475dc4c93a6353fa7052d15d2) by endike (https://sketchfab.com/endike) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
