@@ -9,6 +9,7 @@ public class EnemyFollow : MonoBehaviour
 
     private NavMeshAgent agent;
     private float nextUpdateTime = 0f;
+    private bool isFollowing = true;
 
     void Start()
     {
@@ -32,8 +33,8 @@ public class EnemyFollow : MonoBehaviour
 
     void Update()
     {
-        // Only update if we have both a player and agent, and enough time has passed
-        if (player != null && agent != null && Time.time >= nextUpdateTime)
+        // Only update if we're following, have both a player and agent, and enough time has passed
+        if (isFollowing && player != null && agent != null && Time.time >= nextUpdateTime)
         {
             // Try to find the closest point on the NavMesh to the player's position
             NavMeshHit hit;
@@ -64,6 +65,22 @@ public class EnemyFollow : MonoBehaviour
             // Schedule the next update
             nextUpdateTime = Time.time + updateRate;
         }
+    }
+
+    // Public method to stop following the player
+    public void StopFollowing()
+    {
+        isFollowing = false;
+        if (agent != null)
+        {
+            agent.ResetPath(); // Stops the agent from moving
+        }
+    }
+
+    // Public method to resume following the player
+    public void StartFollowing()
+    {
+        isFollowing = true;
     }
 
     // Optional: Method to change the target at runtime

@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class PlayerBullet : MonoBehaviour
+public class DamageEnemy : MonoBehaviour
 {
-
-    [SerializeField] private bool destroyOnHit = true; // Whether to destroy the bullet on hit
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,12 +20,8 @@ public class PlayerBullet : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
-
-            // Destroy the bullet after hitting the enemy
-            if (destroyOnHit)
-            {
-                Destroy(gameObject);
-            }
+            // Deal damage to the enemy
+            enemy.DealDamage();
 
         }
     }

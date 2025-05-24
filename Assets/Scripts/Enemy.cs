@@ -1,5 +1,6 @@
 using JigglePhysics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class Enemy : MonoBehaviour
     private LeftRightMover leftRightMover;
 
     [SerializeField] private float timeToDie = 2f;
+
+    [SerializeField] private UnityEvent onDeath;
+
+    private bool dead = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,6 +46,10 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        if (dead)
+            return;
+
+        dead = true;
         if(jiggleRigBuilder != null)
         {
             jiggleRigBuilder.jiggleRigs[0].jiggleSettings = (deadJiggle);
@@ -63,6 +72,7 @@ public class Enemy : MonoBehaviour
         {
             leftRightMover.StopMoving();
         }
+        onDeath.Invoke();
 
         Destroy(gameObject, timeToDie);
 
