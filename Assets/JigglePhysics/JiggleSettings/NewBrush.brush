@@ -9,33 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0997643438057254c98e228266a7890f, type: 3}
-  m_Name: LeftArm
-  m_EditorClassIdentifier: Naelstrof.JigglePhysics::JigglePhysics.JiggleSettings
-  gravityMultiplier: 0
-  friction: 0.2
-  angleElasticity: 0.8
-  blend: 1
-  airDrag: 0.01
-  lengthElasticity: 1
-  elasticitySoften: 0.502
-  radiusMultiplier: 0
-  radiusCurve:
+  m_Script: {fileID: 12146, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: NewBrush
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Brush
+  m_Mask: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+  m_Falloff:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
-      outSlope: 0
+      outSlope: 1
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
+      value: 1
+      inSlope: 1
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -44,3 +37,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_RadiusScale: 1.4849247
+  m_BlackWhiteRemapMin: 0
+  m_BlackWhiteRemapMax: 1
+  m_InvertRemapRange: 0
