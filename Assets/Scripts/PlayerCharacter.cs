@@ -1,5 +1,7 @@
 using UnityEngine;
 using KinematicCharacterController;
+using Newtonsoft.Json.Bson;
+using Mono.Cecil.Cil;
 
 public enum CrouchInput
 {
@@ -24,6 +26,7 @@ public struct CharacterInput
 public class PlayerCharacter : MonoBehaviour, ICharacterController
 {
     [SerializeField] private KinematicCharacterMotor motor;
+    [SerializeField] private Transform root;
     [SerializeField] private Transform cameraTarget;
     public Transform CameraTarget => cameraTarget;
     [Space]
@@ -35,6 +38,15 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [Space]
     [SerializeField] private float standHeight = 2f;
     [SerializeField] private float crouchHeight = 1f;
+
+    // These are normalized heights, for how far they are from the bottom
+    // to the top of the character
+    [Range(0f, 1f)]
+    [SerializeField] private float standCameraTargetHeight = 0.9f;
+    [Range(0f, 1f)]
+    [SerializeField] private float crouchCameraTargetHeight = 0.7f;
+
+
     private Stance stance;
 
     private Quaternion requestedRotation;
@@ -70,6 +82,20 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             CrouchInput.None => requestedCrouch,
             _ => requestedCrouch
         };
+    }
+
+    public void UpdateBody()
+    {
+        var currentHeight = motor.Capsule.height;
+        var normalizeHeight = currentHeight / standHeight;
+        var cameraTargetHeight = currentHeight * (stance is Stance.Stand ? standCameraTargetHeight : crouchCameraTargetHeight);
+
+        Debug.Log(currentHeight);
+
+        var rootTargetScale = new Vector3(1f, normalizeHeight, 1f);
+
+        cameraTarget.localPosition = new Vector3(0f, cameraTargetHeight, 0f);
+        root.localScale = rootTargetScale;
     }
 
     public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)

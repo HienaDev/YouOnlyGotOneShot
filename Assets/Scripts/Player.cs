@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
             Crouch = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None
         };
         playerCharacter.UpdateInput(characterInput);
+
+        playerCharacter.UpdateBody();
     }
 
     private void LateUpdate()
