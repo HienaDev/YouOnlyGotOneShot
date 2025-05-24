@@ -1,12 +1,17 @@
 using Gameplay;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private CameraSpring cameraSpring;
+    [SerializeField] private CameraLean cameraLean;
+    [SerializeField] private Volume volume;
+    [SerializeField] private StanceVignette stanceVignette; 
 
     private PlayerInputActions inputActions;
 
@@ -19,7 +24,11 @@ public class Player : MonoBehaviour
         inputActions.Enable();
 
         playerCharacter.Initialize();   
-        playerCamera.Initialize(playerCharacter.CameraTarget);  
+        playerCamera.Initialize(playerCharacter.CameraTarget);
+        cameraSpring.Initialize();
+        cameraLean.Initialize();
+
+        stanceVignette.Initialize(volume.profile);
     }
 
     private void OnDestroy()
@@ -31,6 +40,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         var input = inputActions.Gameplay;
+
+        var deltaTime = Time.deltaTime; 
 
         // Get camera input and update its rotation.
         var cameraInput = new CameraInput
@@ -45,15 +56,43 @@ public class Player : MonoBehaviour
             Rotation = playerCamera.transform.rotation,
             Move = input.Move.ReadValue<Vector2>(),
             Jump = input.Jump.WasPressedThisFrame(),
+            JumpSustain = input.Jump.IsPressed(),
             Crouch = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None
         };
+
         playerCharacter.UpdateInput(characterInput);
 
-        playerCharacter.UpdateBody();
+        playerCharacter.UpdateBody(deltaTime);
+
+        playerCamera.UpdatePosition(playerCharacter.CameraTarget);
+        
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            var ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Debug.Log(hit);
+                Teleport(hit.point);
+            }
+        }
+#endif
     }
 
     private void LateUpdate()
     {
-        playerCamera.UpdatePosition(playerCharacter.CameraTarget);
+        var deltaTime = Time.deltaTime;
+        var state = playerCharacter.State;
+
+        cameraSpring.UpdateSpring(deltaTime, playerCharacter.CameraTarget.up);
+        cameraLean.UpdateLean(deltaTime, state.Stance is Stance.Slide ,state.Acceleration ,playerCharacter.CameraTarget.up);
+    
+        stanceVignette.UpdateVignette(deltaTime, state.Stance);
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        playerCharacter.SetPosition(position);
     }
 }
