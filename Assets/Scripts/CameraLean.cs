@@ -8,6 +8,8 @@ public class CameraLean : MonoBehaviour
     [SerializeField] private float slideStrength = 0.1f;
     [SerializeField] private float strengthResponse = 5f;
 
+
+
     private Vector3 dampedAcceleration;
     private Vector3 dampedAccelerationVel;
 
@@ -37,6 +39,8 @@ public class CameraLean : MonoBehaviour
 
         transform.rotation = Quaternion.AngleAxis(dampedAcceleration.magnitude * targetStrength, leanAxis) * transform.rotation;
 
+        
+       
 
     }
 }

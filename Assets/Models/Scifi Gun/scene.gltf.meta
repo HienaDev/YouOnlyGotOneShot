@@ -1,0 +1,103 @@
+fileFormatVersion: 2
+guid: 637e1666fbe249a40ab3a424d64499a6
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_001
+    second: {fileID: 2100000, guid: 655d83901a68d2d498f5cd596bef296a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_002
+    second: {fileID: 2100000, guid: 07c796d6791fbce44834c4507e67df12, type: 2}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 804e1ce4c496647cfa3f1a1134187c71, type: 3}
+  _removeEmptyRootObjects: 1
+  _scaleFactor: 0.005
+  _deduplicateResources: 0
+  _maximumLod: 300
+  _readWriteEnabled: 1
+  _generateColliders: 0
+  _addColliders: 0
+  _swapUvs: 0
+  _generateLightmapUVs: 0
+  _importBlendShapeNames: 1
+  _blendShapeFrameWeight:
+    _option: 0
+    _multiplier: 1
+  _importNormals: 0
+  _importTangents: 0
+  _importCamera: 2
+  _importAnimations: 2
+  _mecanimHumanoidFlip: 0
+  _addAnimatorComponent: 0
+  _animationLoopTime: 1
+  _animationLoopPose: 0
+  _importMaterials: 1
+  _enableGpuInstancing: 0
+  _texturesReadWriteEnabled: 1
+  _generateMipMaps: 1
+  _useSceneNameIdentifier: 1
+  _textureCompression: -50
+  _gltfAsset: '<b>Generator: </b>Sketchfab-16.61.0
+
+    <b>Version: </b>2.0
+
+    
+
+    <b>Extras:
+    </b>
+
+'
+  optimizeGameObjects: 0
+  materials:
+  - {fileID: -874164558550236988, guid: 637e1666fbe249a40ab3a424d64499a6, type: 3}
+  - {fileID: 4250972779551834545, guid: 637e1666fbe249a40ab3a424d64499a6, type: 3}
+  textures:
+  - {fileID: 2800000, guid: b89f4f7f646753a46958ba7c862b3940, type: 3}
+  - {fileID: 2800000, guid: 3543bb1ed9a61d640856562ba5046a83, type: 3}
+  - {fileID: 2800000, guid: ec405b28028b68543a87e7883e3bbed2, type: 3}
+  - {fileID: 2800000, guid: a7ec8bba1e0ebf144927ac2c19e6c598, type: 3}
+  - {fileID: 2800000, guid: 4561350897d5c5d488ae0b7f31e6196c, type: 3}
+  - {fileID: 2800000, guid: a65d9cc9eabb67c4db54f960a9f08bd0, type: 3}
+  - {fileID: 2800000, guid: b31209280972a33428d04df1f41092da, type: 3}
+  hasSceneData: 1
+  hasAnimationData: 0
+  hasMaterialData: 1
+  hasTextureData: 1
+  animations: []
+  _extensions:
+  - name: KHR_materials_emissive_strength
+    supported: 1
+    used: 1
+    required: 0
+  _textures:
+  - texture: {fileID: 2800000, guid: b89f4f7f646753a46958ba7c862b3940, type: 3}
+    shouldBeLinear: 0
+    shouldBeNormalMap: 0
+  - texture: {fileID: 2800000, guid: 3543bb1ed9a61d640856562ba5046a83, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 0
+  - texture: {fileID: 2800000, guid: ec405b28028b68543a87e7883e3bbed2, type: 3}
+    shouldBeLinear: 0
+    shouldBeNormalMap: 0
+  - texture: {fileID: 2800000, guid: a7ec8bba1e0ebf144927ac2c19e6c598, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 1
+  - texture: {fileID: 2800000, guid: 4561350897d5c5d488ae0b7f31e6196c, type: 3}
+    shouldBeLinear: 0
+    shouldBeNormalMap: 0
+  - texture: {fileID: 2800000, guid: a65d9cc9eabb67c4db54f960a9f08bd0, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 0
+  - texture: {fileID: 2800000, guid: b31209280972a33428d04df1f41092da, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 1
+  _mainAssetIdentifier: scenes/Sketchfab_Scene
+  _importPlugins: []

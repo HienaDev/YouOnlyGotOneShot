@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private Volume volume;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
 
         playerCharacter.Initialize();   
         playerCamera.Initialize(playerCharacter.CameraTarget);
+        playerCombat.Initialize();
         cameraSpring.Initialize();
         cameraLean.Initialize();
 
@@ -57,12 +59,22 @@ public class Player : MonoBehaviour
             Move = input.Move.ReadValue<Vector2>(),
             Jump = input.Jump.WasPressedThisFrame(),
             JumpSustain = input.Jump.IsPressed(),
-            Crouch = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None
+            Crouch = input.Crouch.IsPressed() ? CrouchInput.Hold : CrouchInput.None,
+            // Toggle Crouch
+            // Crouch = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None,
+            Sprint = input.Sprint.IsPressed(),
+            Melee = input.Melee.WasPressedThisFrame(),
+            Interact = input.Interact.WasPressedThisFrame(),
+            Reload = input.Reload.WasPressedThisFrame(),
+            Aim = input.Aim.IsPressed(),
+            Shoot = input.Shoot.WasPressedThisFrame(),
         };
 
         playerCharacter.UpdateInput(characterInput);
 
         playerCharacter.UpdateBody(deltaTime);
+
+        playerCombat.UpdateInput(characterInput);
 
         playerCamera.UpdatePosition(playerCharacter.CameraTarget);
         

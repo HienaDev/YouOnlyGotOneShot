@@ -8,6 +8,7 @@ public enum CrouchInput
 {
     None,
     Toggle,
+    Hold,
 }
 
 public enum Stance
@@ -32,6 +33,12 @@ public struct CharacterInput
     public bool Jump;
     public bool JumpSustain;
     public CrouchInput Crouch;
+    public bool Sprint;
+    public bool Melee;
+    public bool Interact;
+    public bool Shoot;
+    public bool Reload;
+    public bool Aim;
 }
 
 public class PlayerCharacter : MonoBehaviour, ICharacterController
@@ -42,6 +49,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     public Transform CameraTarget => cameraTarget;
     [Space]
     [SerializeField] private float walkSpeed = 20f;
+    [SerializeField] private float sprintSpeed = 35f;
     [SerializeField] private float crouchSpeed = 7f;
     [SerializeField] private float walkResponse = 25f;
     [SerializeField] private float crouchResponse = 20f;
@@ -56,6 +64,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float gravity = -90f;
     [Space]
     [SerializeField] private float slideStartSpeed = 25f;
+    [SerializeField] private float slideSprintStartSpeed = 35f;
     [SerializeField] private float slideEndSpeed = 15f;
     [SerializeField] private float slideFriction = 0.8f;
     [SerializeField] private float slideSteerAcceleration = 5f;
@@ -64,6 +73,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float standHeight = 2f;
     [SerializeField] private float crouchHeight = 1f;
     [SerializeField] private float crouchHeightResponse = 15f;
+
+    [SerializeField] private Camera cam;
+    [SerializeField] private float defaultFov = 60f; // Default FOV
+    [SerializeField] private float aimingFov = 30f; // Default FOV
+
+    [SerializeField] private Animator leftArmAnimator;
 
     // These are normalized heights, for how far they are from the bottom
     // to the top of the character
@@ -84,9 +99,11 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool requestedSustainedJump;
     private bool requestedCrouch;
     private bool requestedCrouchInAir;
+    private bool requestedSprint;
     private float timeSinceUngrounded;
     private float timeSinceJumpRequest;
     private bool ungroundedDueToJump;
+    private bool requestedAiming;
 
     private Collider[] uncrouchOverlapResults;
 
@@ -122,17 +139,30 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             timeSinceJumpRequest = 0f;
         }
 
+        requestedAiming = input.Aim;
+        requestedSprint = input.Sprint;
 
         requestedSustainedJump = input.JumpSustain;
 
         var wasRequestingCrouch = requestedCrouch;  
+
+        //Toggle
+        //requestedCrouch = input.Crouch switch
+        //{
+        //    CrouchInput.Toggle => !requestedCrouch,
+        //    CrouchInput.None => requestedCrouch,
+        //    _ => requestedCrouch
+        //};
+
+        //Hold
         requestedCrouch = input.Crouch switch
         {
-            CrouchInput.Toggle => !requestedCrouch,
-            CrouchInput.None => requestedCrouch,
+            CrouchInput.Hold => true,
+            CrouchInput.None => false,
             _ => requestedCrouch
         };
-        if(requestedCrouch && !wasRequestingCrouch)
+
+        if (requestedCrouch && !wasRequestingCrouch)
         {
             requestedCrouchInAir = !state.Grounded;
         }
@@ -140,6 +170,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             requestedCrouchInAir = false;
         }
+
+        leftArmAnimator.SetBool("Slide", state.Stance is Stance.Slide);
     }
 
     public void UpdateBody(float deltaTime)
@@ -192,6 +224,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
+        Time.timeScale = 1f; // Slow down time when aiming
         state.Acceleration = Vector3.zero; // Reset the acceleration
         // If on the ground
         if (motor.GroundingStatus.IsStableOnGround)
@@ -233,13 +266,13 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                     }
 
 
-                    var effectiveSlideStartSpeed = slideStartSpeed;
+                    var effectiveSlideStartSpeed = requestedSprint? slideSprintStartSpeed : slideStartSpeed;
                     if(!lastState.Grounded && !requestedCrouchInAir)
                     {
                         effectiveSlideStartSpeed = 0f;
                         requestedCrouchInAir = false;
                     }
-                    var slideSpeed = Mathf.Max(slideStartSpeed, currentVelocity.magnitude);
+                    var slideSpeed = Mathf.Max(requestedSprint ? slideSprintStartSpeed : slideStartSpeed, currentVelocity.magnitude);
 
                     // Velocity is tangent to the surface so it sticks to surface direction
                     currentVelocity = motor.GetDirectionTangentToSurface
@@ -254,12 +287,13 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             {
 
                 // Calculate the speed and responsiveness of movement based on Stance
-                var speed = state.Stance is Stance.Crouch ? crouchSpeed : walkSpeed;
+                var speed = state.Stance is Stance.Crouch ? crouchSpeed : (requestedSprint ? sprintSpeed : walkSpeed);
+
                 var response = state.Stance is Stance.Crouch ? crouchResponse : walkResponse;
 
                 // And smoothly move along the ground in that direction
                 var targetVelocity = groundedMovement * speed;
-                var moveVelocity = Vector3.Lerp
+                var moveVelocity = Vector3.Slerp
                 (
                     a: currentVelocity,
                     b: targetVelocity,
@@ -268,6 +302,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
                 state.Acceleration = (moveVelocity - currentVelocity) / deltaTime; // Calculate the acceleration
                 currentVelocity = moveVelocity;
+
+
             }
             else
             {
@@ -312,6 +348,9 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         // else, in the air
         else
         {
+            if(requestedAiming)
+                Time.timeScale = 0.2f; // Slow down time when aiming
+
             timeSinceUngrounded += deltaTime; // Increment the time since the last time we were grounded
             // Move in the air
             if (requestedMovement.sqrMagnitude > 0f)
@@ -426,6 +465,20 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                 // Deny jump request
                 requestedJump = canJumpLater;
             }
+
+        }
+
+        // we'll assume 70 magnitude is the max speed for our FOV changed, can be tweaked
+        var fovChange = Mathf.Min(currentVelocity.magnitude, 70f);
+        var targetFov = (requestedAiming ? aimingFov : defaultFov) + fovChange;
+        cam.fieldOfView = Mathf.Lerp
+        (
+            a: cam.fieldOfView,
+            b: targetFov,
+            t: 1f - Mathf.Exp(-10 * deltaTime) // This is better at staying frame rate independent than this: walkResponse * deltaTime
+        );
+        if (currentVelocity.magnitude > 0.1f)
+        {
 
         }
 
