@@ -13,6 +13,8 @@ public class ExplodeEffect : MonoBehaviour
     private Renderer objectRenderer;
     private Color originalColor;
 
+    [SerializeField] private bool onEnable = true;
+
     private void Awake()
     {
         originalLocalPosition = transform.localPosition;
@@ -27,8 +29,12 @@ public class ExplodeEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        ResetState();
-        Explode();
+        if(onEnable)
+        {
+            ResetState();
+            Explode();
+        }
+
     }
 
     private void ResetState()

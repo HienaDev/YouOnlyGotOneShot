@@ -60,7 +60,6 @@ public class Knockback : MonoBehaviour
         rb.useGravity = true;
         // Apply the knockback force as an instant impulse
         Vector3 force = direction * knockbackForce + Vector3.up * upwardForce;
-        Debug.Log(force);
         rb.AddForce(force, ForceMode.Impulse);
     }
 

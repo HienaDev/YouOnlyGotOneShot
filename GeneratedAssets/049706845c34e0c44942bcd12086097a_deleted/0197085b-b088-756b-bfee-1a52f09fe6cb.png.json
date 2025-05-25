@@ -1,0 +1,18 @@
+{
+    "asset": "049706845c34e0c44942bcd12086097a",
+    "fileName": "0197085b-b088-756b-bfee-1a52f09fe6cb.png",
+    "prompt": "A repeatable texture, REPEATABLE TEXTURE to USE ON AN OBJECT it should be a  wall of flesh, blood, veiny, pink, red",
+    "negativePrompt": "black, white, blue",
+    "model": "e74abd0d-f90f-44a2-8a0b-989548d31ca7",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

@@ -1,0 +1,18 @@
+{
+    "asset": "049706845c34e0c44942bcd12086097a",
+    "fileName": "01970858-f076-789e-a963-8f4e73b16ab1.png",
+    "prompt": "A repeatable gross wall of flesh",
+    "negativePrompt": "Pretty",
+    "model": "4d662a89-b8ca-4652-a119-f3963d923bbb",
+    "customSeed": -1,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

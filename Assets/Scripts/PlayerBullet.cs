@@ -104,7 +104,7 @@ public class PlayerBullet : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
-        transform.SetParent(other);
+        //transform.SetParent(other);
         Debug.Log("Bullet stuck to: " + other.name);
     }
 }
