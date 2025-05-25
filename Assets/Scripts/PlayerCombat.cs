@@ -107,12 +107,18 @@ public class PlayerCombat : MonoBehaviour
 
     public void PickUpBullet()
     {
+        foreach( GameObject bullet in bulletsSpawned)
+        {
+            Destroy(bullet);
+        }
+        bulletsSpawned.Clear();
         reloading = false;
         hasBullet = true;
         reloadBarUI.enabled = false;
         reclaimedText.SetActive(true);
         reloadText.SetActive(false);
-        StopCoroutine(reloadCoroutine);
+        if(reloadCoroutine != null)
+            StopCoroutine(reloadCoroutine);
     }
 
     private IEnumerator ReloadCoroutine()
@@ -142,6 +148,12 @@ public class PlayerCombat : MonoBehaviour
         reloadBarUI.enabled = false;
         hasBullet = true;
         reloading = false;
+
+        foreach (GameObject bullet in bulletsSpawned)
+        {
+            Destroy(bullet);
+        }
+        bulletsSpawned.Clear();
         Debug.Log("Reloaded");
     }
 

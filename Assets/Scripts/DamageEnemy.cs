@@ -19,6 +19,7 @@ public class DamageEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Collided with : " + other.gameObject.name);
         // Check if the bullet collided with an enemy
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)

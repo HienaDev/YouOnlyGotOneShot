@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        Debug.Log(gameObject.name + " has died!");
         if (dead)
             return;
 
@@ -81,6 +82,11 @@ public class Enemy : MonoBehaviour
 
     public void GetKnockback()
     {
-        GetComponent<Knockback>().GetKnockedBack();
+        Knockback knockback = GetComponent<Knockback>();
+        if (knockback != null)
+        {
+            knockback.GetKnockedBack();
+        }
+        
     }
 }

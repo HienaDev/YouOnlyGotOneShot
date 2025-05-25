@@ -6,7 +6,7 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] private GameObject indicator;
     [SerializeField] private LayerMask stickLayers; // Selectable in inspector
 
-   
+    [SerializeField] private bool withKnockback = false;
 
     private bool isOnFloor = false;
 
@@ -31,9 +31,15 @@ public class PlayerBullet : MonoBehaviour
             playerCombat.ApplyKickback();
             playerCombat.PickUpBullet();
 
+            enemy.DealDamage();
+            if (withKnockback)
+            {
+                enemy.GetKnockback();
+            }
+
             if (destroyOnHit)
             {
-                Destroy(gameObject);
+                Destroy(gameObject, 0.1f);
             }
         }
         else if (IsInStickLayer(other.gameObject))
@@ -44,12 +50,33 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (isOnFloor)
+        {
+            PlayerCombat playerCombat = collision.gameObject.GetComponent<PlayerCombat>();
+            if (playerCombat != null)
+            {
+                playerCombat.ApplyKickback();
+                playerCombat.PickUpBullet();
+                Destroy(gameObject, 0.1f);
+            }
+            return;
+        }
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
+            PlayerCombat playerCombat = FindAnyObjectByType<PlayerCombat>();
+            playerCombat.ApplyKickback();
+            playerCombat.PickUpBullet();
+
+            enemy.DealDamage();
+            if (withKnockback)
+            {
+                enemy.GetKnockback();
+            }
+
             if (destroyOnHit)
             {
-                Destroy(gameObject);
+                Destroy(gameObject, 0.1f);
             }
         }
         else if (IsInStickLayer(collision.gameObject))
@@ -65,6 +92,7 @@ public class PlayerBullet : MonoBehaviour
 
     private void StickToSurface(Transform other)
     {
+        //GetComponent<DamageEnemy>().enabled = false; // Disable damage script to prevent further damage 
         isOnFloor = true;
         indicator.SetActive(true);
 

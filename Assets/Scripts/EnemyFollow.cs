@@ -6,92 +6,118 @@ public class EnemyFollow : MonoBehaviour
     [Header("Follow Settings")]
     public Transform player;
     public float updateRate = 0.1f; // How often to update the path (in seconds)
+    public float navMeshSampleDistance = 10f; // Max distance to sample for NavMesh position
 
     private NavMeshAgent agent;
     private float nextUpdateTime = 0f;
     private bool isFollowing = true;
+    private Vector3 lastTargetPosition;
+
+    void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        lastTargetPosition = Vector3.positiveInfinity; // Initialize with impossible value
+    }
 
     void Start()
     {
-        // Get the NavMeshAgent component
-        agent = GetComponent<NavMeshAgent>();
-
         // If no player is assigned, try to find it by tag
         if (player == null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                player = playerObj.transform;
-            }
-            else
-            {
-                Debug.LogWarning("EnemyFollow: No player found! Please assign a player or tag your player GameObject with 'Player' tag.");
-            }
+            FindPlayerByTag();
         }
     }
 
     void Update()
     {
-        // Only update if we're following, have both a player and agent, and enough time has passed
-        if (isFollowing && player != null && agent != null && Time.time >= nextUpdateTime)
+        if (!ShouldUpdatePath()) return;
+
+        UpdatePathToPlayer();
+        nextUpdateTime = Time.time + updateRate;
+    }
+
+    private bool ShouldUpdatePath()
+    {
+        return isFollowing &&
+               player != null &&
+               agent != null &&
+               agent.isActiveAndEnabled &&
+               agent.isOnNavMesh &&
+               Time.time >= nextUpdateTime;
+    }
+
+    private void UpdatePathToPlayer()
+    {
+        Vector3 targetPosition = GetValidNavMeshPosition(player.position);
+
+        // Only update if the target position has changed significantly
+        if (Vector3.Distance(targetPosition, lastTargetPosition) > agent.stoppingDistance)
         {
-            // Try to find the closest point on the NavMesh to the player's position
-            NavMeshHit hit;
-            Vector3 targetPosition = player.position;
-
-            // Sample the NavMesh to find a valid position near the player
-            if (NavMesh.SamplePosition(player.position, out hit, 10f, NavMesh.AllAreas))
-            {
-                targetPosition = hit.position;
-            }
-            else
-            {
-                // If player is too far from NavMesh, project their position down to find ground
-                RaycastHit groundHit;
-                if (Physics.Raycast(player.position, Vector3.down, out groundHit, Mathf.Infinity))
-                {
-                    // Try to sample near the ground position
-                    if (NavMesh.SamplePosition(groundHit.point, out hit, 5f, NavMesh.AllAreas))
-                    {
-                        targetPosition = hit.position;
-                    }
-                }
-            }
-
-            // Set the destination to the valid NavMesh position
             agent.SetDestination(targetPosition);
-
-            // Schedule the next update
-            nextUpdateTime = Time.time + updateRate;
+            lastTargetPosition = targetPosition;
         }
     }
 
-    // Public method to stop following the player
+    private Vector3 GetValidNavMeshPosition(Vector3 desiredPosition)
+    {
+        NavMeshHit hit;
+
+        // First try to find position on NavMesh
+        if (NavMesh.SamplePosition(desiredPosition, out hit, navMeshSampleDistance, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+
+        // If not on NavMesh, try raycasting down to find ground
+        if (Physics.Raycast(desiredPosition, Vector3.down, out RaycastHit groundHit, Mathf.Infinity))
+        {
+            // Try to sample near the ground position
+            if (NavMesh.SamplePosition(groundHit.point, out hit, navMeshSampleDistance * 0.5f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+
+        // Fallback - return original position (agent might not be able to reach this)
+        return desiredPosition;
+    }
+
+    private void FindPlayerByTag()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyFollow: No player found! Please assign a player or tag your player GameObject with 'Player' tag.");
+        }
+    }
+
     public void StopFollowing()
     {
         isFollowing = false;
-        if (agent != null)
+        if (agent != null && agent.isActiveAndEnabled)
         {
-            agent.ResetPath(); // Stops the agent from moving
+            agent.ResetPath();
         }
     }
 
-    // Public method to resume following the player
     public void StartFollowing()
     {
         isFollowing = true;
+        nextUpdateTime = Time.time; // Allow immediate update
     }
 
-    // Optional: Method to change the target at runtime
     public void SetTarget(Transform newTarget)
     {
         player = newTarget;
+        nextUpdateTime = Time.time; // Allow immediate update
     }
 
-    // Optional: Method to change update rate at runtime
     public void SetUpdateRate(float newRate)
     {
-        updateRate = Mathf.Max(0.01f, newRate); // Minimum 0.01 seconds
+        updateRate = Mathf.Max(0.01f, newRate);
     }
 }

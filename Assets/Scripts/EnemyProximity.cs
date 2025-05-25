@@ -6,18 +6,49 @@ public class EnemyProximity : MonoBehaviour
     [Header("Proximity Settings")]
     public Transform player;
     public float triggerDistance = 3f;
-    public bool triggerOnce = true; // If true, only triggers once until reset
+    public float veryCloseDistance = 1f;
+
+    [Tooltip("Cooldown in seconds between OnPlayerClose triggers")]
+    public float closeTriggerCooldown = 5f;
+
+    [Tooltip("Cooldown in seconds between OnPlayerVeryClose triggers")]
+    public float veryCloseTriggerCooldown = 5f;
 
     [Header("Events")]
-    public UnityEvent OnPlayerClose; // Called when player gets close
-    public UnityEvent OnPlayerFar;   // Called when player moves away (optional)
+    public UnityEvent OnPlayerClose;
+    public UnityEvent OnPlayerVeryClose;
+    public UnityEvent OnPlayerFar;
 
-    private bool playerIsClose = false;
-    private bool hasTriggered = false;
+    private float lastCloseTriggerTime = -Mathf.Infinity;
+    private float lastVeryCloseTriggerTime = -Mathf.Infinity;
+    private ProximityState currentState = ProximityState.Far;
+
+    private enum ProximityState
+    {
+        Far,
+        Close,
+        VeryClose
+    }
 
     void Start()
     {
-        // If no player is assigned, try to find it by tag
+        FindPlayerIfNull();
+    }
+
+    void Update()
+    {
+        if (player == null)
+        {
+            FindPlayerIfNull();
+            return;
+        }
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        CheckProximityStates(distanceToPlayer);
+    }
+
+    private void FindPlayerIfNull()
+    {
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -27,69 +58,126 @@ public class EnemyProximity : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("EnemyProximity: No player found! Please assign a player or tag your player GameObject with 'Player' tag.");
+                Debug.LogWarning("EnemyProximity: No player found!");
             }
         }
     }
 
-    void Update()
+    private void CheckProximityStates(float distance)
     {
-        if (player == null) return;
-
-        // Calculate distance to player
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        // Check if player is within trigger distance
-        bool isPlayerClose = distanceToPlayer <= triggerDistance;
-
-        // Player just entered the trigger zone
-        if (isPlayerClose && !playerIsClose)
+        // Check for state transitions
+        if (distance <= veryCloseDistance)
         {
-            if (!triggerOnce || !hasTriggered)
+            HandleVeryCloseState();
+        }
+        else if (distance <= triggerDistance)
+        {
+            HandleCloseState();
+        }
+        else
+        {
+            HandleFarState();
+        }
+    }
+
+    private void HandleVeryCloseState()
+    {
+        if (currentState != ProximityState.VeryClose)
+        {
+            // State transition to VeryClose
+            currentState = ProximityState.VeryClose;
+            TryTriggerVeryCloseEvent();
+        }
+        else
+        {
+            // Already in VeryClose state - check cooldown
+            TryTriggerVeryCloseEvent();
+        }
+    }
+
+    private void HandleCloseState()
+    {
+        if (currentState != ProximityState.Close)
+        {
+            // State transition to Close
+            currentState = ProximityState.Close;
+            TryTriggerCloseEvent();
+        }
+        else
+        {
+            // Already in Close state - check cooldown
+            TryTriggerCloseEvent();
+        }
+    }
+
+    private void HandleFarState()
+    {
+        if (currentState != ProximityState.Far)
+        {
+            // State transition to Far
+            currentState = ProximityState.Far;
+            OnPlayerFar.Invoke();
+        }
+    }
+
+    private void TryTriggerVeryCloseEvent()
+    {
+        if (Time.time - lastVeryCloseTriggerTime >= veryCloseTriggerCooldown)
+        {
+            OnPlayerVeryClose.Invoke();
+            lastVeryCloseTriggerTime = Time.time;
+            // Also trigger close event if cooldown allows
+            if (Time.time - lastCloseTriggerTime >= closeTriggerCooldown)
             {
                 OnPlayerClose.Invoke();
-                hasTriggered = true;
+                lastCloseTriggerTime = Time.time;
             }
-            playerIsClose = true;
-        }
-        // Player just left the trigger zone
-        else if (!isPlayerClose && playerIsClose)
-        {
-            OnPlayerFar.Invoke();
-            playerIsClose = false;
         }
     }
 
-    // Public method to reset the trigger (useful if triggerOnce is true)
+    private void TryTriggerCloseEvent()
+    {
+        if (Time.time - lastCloseTriggerTime >= closeTriggerCooldown)
+        {
+            OnPlayerClose.Invoke();
+            lastCloseTriggerTime = Time.time;
+        }
+    }
+
     public void ResetTrigger()
     {
-        hasTriggered = false;
-        playerIsClose = false;
+        lastCloseTriggerTime = -Mathf.Infinity;
+        lastVeryCloseTriggerTime = -Mathf.Infinity;
+        currentState = ProximityState.Far;
     }
 
-    // Public method to change trigger distance at runtime
     public void SetTriggerDistance(float newDistance)
     {
         triggerDistance = Mathf.Max(0f, newDistance);
     }
 
-    // Public method to check if player is currently close
     public bool IsPlayerClose()
     {
-        return playerIsClose;
+        return currentState == ProximityState.Close || currentState == ProximityState.VeryClose;
     }
 
-    // Public method to get current distance to player
+    public bool IsPlayerVeryClose()
+    {
+        return currentState == ProximityState.VeryClose;
+    }
+
     public float GetDistanceToPlayer()
     {
         if (player == null) return float.MaxValue;
         return Vector3.Distance(transform.position, player.position);
     }
 
-    // Draw the trigger distance in the Scene view
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = playerIsClose ? Color.red : Color.yellow;
+        Gizmos.color = IsPlayerClose() ? Color.red : Color.yellow;
         Gizmos.DrawWireSphere(transform.position, triggerDistance);
+
+        Gizmos.color = IsPlayerVeryClose() ? Color.magenta : Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, veryCloseDistance);
     }
 }
