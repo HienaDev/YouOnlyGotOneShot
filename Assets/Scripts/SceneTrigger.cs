@@ -18,4 +18,20 @@ public class SceneTrigger : MonoBehaviour
         }
 
     }
+
+    public void LoadScene()
+    {
+        // This method can be called to load the scene programmatically
+        SceneManager.LoadScene(targetSceneName);
+    }
+
+    public void ExitGame()
+    {
+        // This method can be called to exit the game
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Stop playing in the editor
+#else
+        Application.Quit(); // Quit the application in a build
+#endif
+    }
 }

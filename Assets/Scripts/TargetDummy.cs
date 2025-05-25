@@ -42,6 +42,7 @@ public class TargetDummy : MonoBehaviour
                 Debug.LogWarning("TargetDummy: PlayerCombat component not found in the scene.");
                 return;
             }
+            Destroy(collision.gameObject); // Destroy the bullet on collision   
             playerCombat.ApplyKickback();
             playerCombat.PickUpBullet();
         }
