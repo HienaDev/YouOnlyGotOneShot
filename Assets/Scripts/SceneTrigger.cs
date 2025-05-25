@@ -21,12 +21,14 @@ public class SceneTrigger : MonoBehaviour
 
     public void LoadScene()
     {
+        Time.timeScale = 1f; // Ensure time scale is reset before loading a new scene
         // This method can be called to load the scene programmatically
         SceneManager.LoadScene(targetSceneName);
     }
 
     public void ExitGame()
     {
+        Time.timeScale = 1f; // Ensure time scale is reset before loading a new scene
         // This method can be called to exit the game
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false; // Stop playing in the editor

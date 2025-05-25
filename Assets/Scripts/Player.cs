@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
         {
             settings.SetActive(!settings.activeSelf);
             Cursor.lockState = settings.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = settings.activeSelf;
             Time.timeScale = settings.activeSelf ? 0f : 1f;
         }
 

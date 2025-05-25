@@ -2505,7 +2505,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SLIDE DOWN SLOPES TO GAIN SPEED AND JUMP
+  m_text: SL<color=#FF007F>I</color>D<color=#FF007F>E</color> DOWN SLOP<color=#FF007F>E</color>S
+    TO GA<color=#FF007F>I</color>N SP<color=#FF007F>E</color>ED AND JUMP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -4313,7 +4314,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU CAN CROUCH WHILE MOVING TO SLIDE
+  m_text: YOU CAN CROUCH WHIL<color=#FF007F>E</color> MOV<color=#FF007F>I</color>NG
+    TO SL<color=#FF007F>I</color>D<color=#FF007F>E</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -4719,9 +4721,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'WASD - MOVE
-
-    L SHIFT - SPRINT'
+  m_text: "WASD - MOV<color=#FF007F>E</color>\r\n\rL SH<color=#FF007F>I</color>FT
+    - SPR<color=#FF007F>I</color>NT"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -7310,6 +7311,10 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 547230834}
+    - target: {fileID: 1475317229511899043, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2753613841767467112, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: jiggleRigs.Array.data[0].animated
       value: 1
@@ -7350,12 +7355,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.003
       objectReference: {fileID: 0}
+    - target: {fileID: 4118789025083349813, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4534479243792879260, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_text
       value: YOU HAVE <color=#900000>ONE</color> <i>SHOT</i>
       objectReference: {fileID: 0}
     - target: {fileID: 4534479243792879260, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598494844862494837, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853362135702695621, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
@@ -7407,6 +7420,10 @@ PrefabInstance:
       value: 'YOU HAVE <color=#FF0>ONE</color>  <i>SHOT</i>
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484240585698246972, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7713269409280256018, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_text

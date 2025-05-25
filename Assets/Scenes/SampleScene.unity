@@ -5269,6 +5269,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1475317229511899043, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118789025083349813, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598494844862494837, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5853362135702695621, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5311,6 +5323,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5860188268881008515, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484240585698246972, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8002329301514572563, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}

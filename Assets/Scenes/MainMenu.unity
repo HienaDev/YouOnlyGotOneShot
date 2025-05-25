@@ -375,8 +375,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 603110725}
   - {fileID: 555703718}
+  - {fileID: 603110725}
   - {fileID: 1813152733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -773,7 +773,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Ex<color=#FF007F>I</color>t
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 603110726}
   - component: {fileID: 603110729}
   - component: {fileID: 603110731}
-  - component: {fileID: 603110730}
+  - component: {fileID: 603110732}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -938,9 +938,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603110730}
-        m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-        m_MethodName: PlayExplodeEffect
+      - m_Target: {fileID: 603110729}
+        m_TargetAssemblyTypeName: SceneTrigger, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1002,42 +1002,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTrigger
   targetSceneName: Level 1
   triggeringTag: Player
---- !u!114 &603110730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 603110724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d55a54e3918c6cf4b8b2bef69f161d1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  text1: {fileID: 1825064973}
-  text2: {fileID: 1208014644}
-  targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  scaleUpMultiplier: 1.1
-  scaleUpDuration: 0.15
-  scaleDownDuration: 0.1
-  explodeScaleMultiplier: 3
-  explodeDuration: 0.5
-  clickEventDelay: 0.3
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 603110729}
-        m_TargetAssemblyTypeName: SceneTrigger, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &603110731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1055,9 +1019,21 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 603110730}
-          m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-          m_MethodName: PlayScaleEffect
+        - m_Target: {fileID: 603110732}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: Highlight
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 603110732}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ScaleUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1071,9 +1047,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 603110730}
-          m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-          m_MethodName: ResetScale
+        - m_Target: {fileID: 603110732}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ResetColor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1083,6 +1059,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 603110732}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ScaleDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &603110732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603110724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64e781d48ba2e84ea7914b3ffa71637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetTextColor
+  highlightedColor: {r: 0.1563007, g: 1, b: 0.015686274, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  text: {fileID: 1825064973}
 --- !u!1 &619949339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,7 +1143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ONE BULLET
+  m_text: <color=#FF007F>ONE</color> BULLET
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -2093,7 +2096,7 @@ GameObject:
   - component: {fileID: 1813152737}
   - component: {fileID: 1813152736}
   - component: {fileID: 1813152735}
-  - component: {fileID: 1813152734}
+  - component: {fileID: 1813152740}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -2121,42 +2124,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -180}
   m_SizeDelta: {x: 64.65, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1813152734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1813152732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d55a54e3918c6cf4b8b2bef69f161d1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  text1: {fileID: 584890560}
-  text2: {fileID: 584659401}
-  targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  scaleUpMultiplier: 1.1
-  scaleUpDuration: 0.15
-  scaleDownDuration: 0.1
-  explodeScaleMultiplier: 3
-  explodeDuration: 0.5
-  clickEventDelay: 0.3
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1813152736}
-        m_TargetAssemblyTypeName: SceneTrigger, Assembly-CSharp
-        m_MethodName: ExitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1813152735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2174,9 +2141,21 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1813152734}
-          m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-          m_MethodName: PlayScaleEffect
+        - m_Target: {fileID: 1813152740}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: Highlight
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1813152740}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ScaleUp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2190,9 +2169,21 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1813152734}
-          m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-          m_MethodName: ResetScale
+        - m_Target: {fileID: 1813152740}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ResetColor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1813152740}
+          m_TargetAssemblyTypeName: SetTextColor, Assembly-CSharp
+          m_MethodName: ScaleDown
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2260,9 +2251,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1813152734}
-        m_TargetAssemblyTypeName: ButtonEffectController, Assembly-CSharp
-        m_MethodName: PlayExplodeEffect
+      - m_Target: {fileID: 1813152736}
+        m_TargetAssemblyTypeName: SceneTrigger, Assembly-CSharp
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2310,6 +2301,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813152732}
   m_CullTransparentMesh: 1
+--- !u!114 &1813152740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813152732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64e781d48ba2e84ea7914b3ffa71637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetTextColor
+  highlightedColor: {r: 0.2414873, g: 1, b: 0.015686274, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  text: {fileID: 584890560}
 --- !u!1 &1822337209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2504,7 +2510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY
+  m_text: PL<color=#FF007F>A</color>Y
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}

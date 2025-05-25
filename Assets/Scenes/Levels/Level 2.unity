@@ -1490,9 +1490,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'E - INTERACT
+  m_text: '<color=#FF007F>E</color> - INT<color=#FF007F>E</color>RACT
 
-    PRESS THE BUTTON WHEN YOU''RE READY'
+    PR<color=#FF007F>E</color>SS
+    TH<color=#FF007F>E</color> BUTTON WH<color=#FF007F>E</color>N YOU''R<color=#FF007F>E</color>
+    READY'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -2168,9 +2170,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'R - RELOAD
+  m_text: 'R - R<color=#FF007F>E</color>LOAD
 
-    RELOADING TAKES A LONG TIME'
+    R<color=#FF007F>E</color>LOAD<color=#FF007F>I</color>NG
+    TAK<color=#FF007F>E</color>S A LONG T<color=#FF007F>I</color>M<color=#FF007F>E</color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -3274,8 +3277,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU ONLY HAVE 1 BULLET, PICK IT UP FROM THE FLOOR OR KILL AN ENEMY TO GET
-    IT BACK
+  m_text: YOU ONLY HAV<color=#FF007F>E</color> <color=#FF007F>1</color> BULLET, P<color=#FF007F>I</color>CK
+    <color=#FF007F>I</color>T UP FROM THE FLOOR OR K<color=#FF007F>I</color>LL AN
+    <color=#FF007F>E</color>N<color=#FF007F>E</color>MY TO G<color=#FF007F>E</color>T
+    <color=#FF007F>I</color>T BACK
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -5811,7 +5816,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'V - PUNCH
 
-    IF YOU''RE IN A PINCH YOU CAN ALWAYS <i>PUNCH</i> THEM'
+    <color=#FF007F>I</color>F YOU''R<color=#FF007F>E</color>
+    <color=#FF007F>I</color>N A P<color=#FF007F>I</color>NCH YOU CAN ALWAYS <i>PUNCH</i>
+    TH<color=#FF007F>E</color>M'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
   m_sharedMaterial: {fileID: -1442675487995316313, guid: 7f9034f71abe3f7488b6e1e1a572d961, type: 2}
@@ -9859,6 +9866,10 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 547230834}
+    - target: {fileID: 1475317229511899043, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2753613841767467112, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: jiggleRigs.Array.data[0].animated
       value: 1
@@ -9899,6 +9910,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.003
       objectReference: {fileID: 0}
+    - target: {fileID: 4118789025083349813, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4136924328093992189, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: wallSlideReduction
       value: 1
@@ -9913,6 +9928,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534479243792879260, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598494844862494837, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853362135702695621, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
@@ -9964,6 +9983,10 @@ PrefabInstance:
       value: 'YOU HAVE <color=#FF0>ONE</color>  <i>SHOT</i>
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484240585698246972, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7713269409280256018, guid: bf8ce4f125836e6409efab9dcbbae1ee, type: 3}
       propertyPath: m_text
