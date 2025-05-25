@@ -14,8 +14,8 @@ public class LeftRightMover : MonoBehaviour
         Vector3 endPosition = startPosition + moveDirection.normalized * moveDistance;
 
         transform.DOMove(endPosition, moveDuration)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.InOutSine);
+        .SetLoops(-1, LoopType.Yoyo) // Loop forever in a Yoyo (ping-pong) style
+        .SetEase(Ease.InOutSine);
     }
 
     public void StopMoving()

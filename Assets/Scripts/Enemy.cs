@@ -78,4 +78,9 @@ public class Enemy : MonoBehaviour
 
 
     }
+
+    public void GetKnockback()
+    {
+        GetComponent<Knockback>().GetKnockedBack();
+    }
 }

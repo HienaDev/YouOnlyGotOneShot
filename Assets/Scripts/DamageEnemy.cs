@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DamageEnemy : MonoBehaviour
 {
+
+    [SerializeField] private bool withKnockback = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +25,10 @@ public class DamageEnemy : MonoBehaviour
         {
             // Deal damage to the enemy
             enemy.DealDamage();
+            if(withKnockback)
+            {
+                enemy.GetKnockback();
+            }
 
         }
     }

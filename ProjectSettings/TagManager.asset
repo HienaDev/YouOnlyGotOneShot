@@ -14,10 +14,10 @@ TagManager:
   - Arm
   - PlayerBullet
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player
+  - EnemyBullet
+  - NoEnemyInteraction
   - 
   - 
   - 
