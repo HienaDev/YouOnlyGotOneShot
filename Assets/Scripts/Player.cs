@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     private PlayerInputActions inputActions;
 
-
+    [SerializeField] private GameObject settings;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,6 +51,14 @@ public class Player : MonoBehaviour
         };
         playerCamera.UpdateRotation(cameraInput);
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            settings.SetActive(!settings.activeSelf);
+            Cursor.lockState = settings.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+            Time.timeScale = settings.activeSelf ? 0f : 1f;
+        }
+
         // Get character input and update it.
         var characterInput = new CharacterInput
         {
@@ -69,6 +77,9 @@ public class Player : MonoBehaviour
             Shoot = input.Shoot.WasPressedThisFrame(),
         };
 
+
+        if (settings.activeSelf)
+            return;
         playerCharacter.UpdateInput(characterInput);
 
         playerCharacter.UpdateBody(deltaTime);

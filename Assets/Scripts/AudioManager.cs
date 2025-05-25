@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
         source.volume = volume;
         source.spatialBlend = is3D ? 1f : 0f;
         source.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
+        source.outputAudioMixerGroup = mixerGroup;
         source.Play();
 
         Destroy(tempGO, clip.length / source.pitch);

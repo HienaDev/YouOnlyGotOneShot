@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-using static UnityEditor.MaterialProperty;
+
 
 public class LeftRightMover : MonoBehaviour
 {

@@ -38,4 +38,14 @@ public class PlayerCamera : MonoBehaviour
     {
         transform.position = target.position;
     }
+
+    public void SetSensitivity(float newSensitivity)
+    {
+        sensitivity = newSensitivity;
+    }
+
+    public float GetSensitivity()
+    {
+        return sensitivity;
+    }
 }

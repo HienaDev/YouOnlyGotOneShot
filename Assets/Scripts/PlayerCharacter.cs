@@ -1,8 +1,6 @@
 using UnityEngine;
 using KinematicCharacterController;
-using Newtonsoft.Json.Bson;
-using Mono.Cecil.Cil;
-using static UnityEditorInternal.VersionControl.ListControl;
+
 
 public enum CrouchInput
 {

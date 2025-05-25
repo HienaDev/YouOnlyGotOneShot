@@ -997,6 +997,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  deathSounds: []
 --- !u!114 &6321344471447120802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,7 +1112,7 @@ AudioSource:
   m_GameObject: {fileID: 3267074674833423203}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4ad773f0f59b087488d0010faa580331, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0609b792e22e7dd4bbdd186880e1ab43, type: 3}
   m_Resource: {fileID: 8300000, guid: 0609b792e22e7dd4bbdd186880e1ab43, type: 3}
   m_PlayOnAwake: 1
