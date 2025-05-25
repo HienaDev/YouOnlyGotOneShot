@@ -1690,6 +1690,7 @@ GameObject:
   - component: {fileID: 5710511313294667780}
   - component: {fileID: 4824537182919472806}
   - component: {fileID: 1217358190332651995}
+  - component: {fileID: 7427391643337395753}
   m_Layer: 8
   m_Name: Peeker_animation
   m_TagString: Untagged
@@ -1707,8 +1708,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.40079498, y: 6.410225, z: -9.713186}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6317195149811329755}
   - {fileID: 7866588120820996585}
@@ -1871,6 +1872,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7427391643337395753}
+        m_TargetAssemblyTypeName: PeekerSounds, Assembly-CSharp
+        m_MethodName: PlayPeekSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPlayerFar:
     m_PersistentCalls:
       m_Calls:
@@ -1989,6 +2002,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  deathSounds:
+  - {fileID: 8300000, guid: 1b6e62f9f3fe4a74f8ee1471f209a26d, type: 3}
+  - {fileID: 8300000, guid: e08460fa824508846bc7e9141149c170, type: 3}
+  - {fileID: 8300000, guid: 91a76999891e2cf40a5ce2e4d90fc584, type: 3}
+  - {fileID: 8300000, guid: 737c7ab5c3558c34abc984edcc6d1e03, type: 3}
 --- !u!136 &4824537182919472806
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2035,6 +2053,22 @@ CapsuleCollider:
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.58, z: 0}
+--- !u!114 &7427391643337395753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236747332118395002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba8dfa0a5de6294f855eccedba0123b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  peekSounds:
+  - {fileID: 8300000, guid: 57cddd88cc0ff1740a878fbc4de4ba12, type: 3}
+  - {fileID: 8300000, guid: 44dfa9304216410408ca41d7b9a56ffc, type: 3}
+  - {fileID: 8300000, guid: e62f9e6e7e79c8e469ebdf5680bd4b28, type: 3}
 --- !u!1 &7623088148933388779
 GameObject:
   m_ObjectHideFlags: 0

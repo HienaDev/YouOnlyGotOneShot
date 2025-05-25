@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
 
     private PlayerInputActions inputActions;
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,10 +35,7 @@ public class Player : MonoBehaviour
         stanceVignette.Initialize(volume.profile);
     }
 
-    private void OnDestroy()
-    {
-        inputActions.Disable();
-    }
+
 
     // Update is called once per frame
     void Update()

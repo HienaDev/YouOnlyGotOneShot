@@ -12,6 +12,14 @@ public class LookAtPlayer : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private LookAtTarget[] objectsToRotate;
 
+    private void Start()
+    {
+        if(player == null)
+        {
+            player = FindAnyObjectByType<PlayerCharacter>().transform; // Assuming Player is a class that has a Transform
+        }
+    }
+
     private void FixedUpdate()
     {
         if (player == null) return;

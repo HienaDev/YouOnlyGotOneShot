@@ -48,6 +48,11 @@ public class HomingObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         startTime = Time.time;
 
+        if (target == null)
+        {
+            target = FindAnyObjectByType<PlayerCharacter>().transform; // Assuming Player is a class that has a Transform
+        }
+
         // Auto-find target if enabled
         if (autoFindTarget && target == null)
         {
@@ -74,6 +79,8 @@ public class HomingObject : MonoBehaviour
             {
                 rb.AddForce(Vector3.up * initialBoost, ForceMode.Impulse);
             }
+
+            GetComponent<GnomeSounds>().PlayJumpSound();
         }
     }
 

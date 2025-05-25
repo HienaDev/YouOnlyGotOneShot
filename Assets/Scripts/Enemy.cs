@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
 
     private bool dead = false;
 
+    [SerializeField] private AudioClip[] deathSounds;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,7 +52,11 @@ public class Enemy : MonoBehaviour
         if (dead)
             return;
 
-        dead = true;
+        if (deathSounds.Length > 0)
+        {
+            AudioManager.Instance.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)], transform.position, 1f, true);
+        }
+            dead = true;
         if(jiggleRigBuilder != null)
         {
             jiggleRigBuilder.jiggleRigs[0].jiggleSettings = (deadJiggle);

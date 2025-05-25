@@ -15,9 +15,14 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private Transform player;
     private float nextFireTime;
 
+    [SerializeField] private AudioClip laserSound;
+
     void Start()
     {
-
+        if (player == null)
+        {
+            player = FindAnyObjectByType<PlayerCharacter>().transform; // Assuming Player is a class that has a Transform
+        }
         // If no fire point is assigned, use this object's transform
         if (firePoint == null)
         {
@@ -75,6 +80,8 @@ public class EnemyShooter : MonoBehaviour
 
         // Calculate direction to player
         Vector3 directionToPlayer = (player.position - firePoint.position).normalized;
+
+        AudioManager.Instance.PlayOneShot(laserSound, firePoint.position, 1f, true);
 
         // Instantiate bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(directionToPlayer));

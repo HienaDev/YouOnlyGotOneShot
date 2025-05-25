@@ -107,6 +107,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private Collider[] uncrouchOverlapResults;
 
+    [SerializeField] private AudioClip slidingClip;
+
     public void Initialize()
     {
         state.Stance = Stance.Stand;
@@ -115,6 +117,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         uncrouchOverlapResults = new Collider[8];
 
         motor.CharacterController = this;
+
+        AudioManager.Instance.PlayLoop("Sliding", slidingClip, transform, 0f, true);
     }
 
     public void UpdateInput(CharacterInput input)
@@ -224,7 +228,23 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
-        Time.timeScale = 1f; // Slow down time when aiming
+        if(state.Stance is Stance.Slide)
+        {
+            AudioManager.Instance.SetLoopVolume
+            (
+                key: "Sliding",
+                volume: Mathf.Clamp01(currentVelocity.magnitude / 30f) // Assuming 30 is the max speed for sliding
+            );
+        }
+        else
+        {
+            AudioManager.Instance.SetLoopVolume
+                (
+                key: "Sliding",
+                volume: 0f // Stop sliding sound when not sliding
+            );
+        }
+            Time.timeScale = 1f; // Slow down time when aiming
         state.Acceleration = Vector3.zero; // Reset the acceleration
         // If on the ground
         if (motor.GroundingStatus.IsStableOnGround)

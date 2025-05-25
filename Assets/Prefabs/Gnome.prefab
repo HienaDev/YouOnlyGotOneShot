@@ -529,6 +529,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6884614026485298302}
+        m_TargetAssemblyTypeName: GnomeSounds, Assembly-CSharp
+        m_MethodName: PlayDieSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2701939031927345455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +603,7 @@ GameObject:
   - component: {fileID: 5790203831101228318}
   - component: {fileID: 5804059506210109336}
   - component: {fileID: 2720608754432583532}
+  - component: {fileID: 6884614026485298302}
   m_Layer: 8
   m_Name: Gnome
   m_TagString: Untagged
@@ -827,6 +840,24 @@ MonoBehaviour:
   impactEffect: {fileID: 8783113045919725671, guid: 680d00291240bda4cb735e4690e506b7, type: 3}
   maxLifetime: 7.5
   initialBoost: 30
+--- !u!114 &6884614026485298302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769973076537651747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce25caa7c09834e46b8c84d989559817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  gnomeDie: {fileID: 8300000, guid: 57ade056df979d94aa996fe28fc4980b, type: 3}
+  gnomeDieSoundVolume: 2
+  gnomeJump: {fileID: 8300000, guid: 110cbc6654f612f489801bf85045d203, type: 3}
+  gnomeJumpSoundVolume: 2
+  gnomeExplosion: {fileID: 8300000, guid: 063c6dd576adbc042ad6acd38276c7c2, type: 3}
+  gnomeExplosionSoundVolume: 1
 --- !u!1 &4002849813177405464
 GameObject:
   m_ObjectHideFlags: 0

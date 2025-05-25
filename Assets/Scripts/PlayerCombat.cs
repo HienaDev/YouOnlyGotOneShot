@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private Animator leftArmAnimator;
-    [SerializeField] private Transform firePoint;            // Where the bullet spawns (e.g., tip of the pistol)
-    [SerializeField] private GameObject bulletPrefab;        // The bullet to shoot
-    [SerializeField] private Camera playerCamera;            // Main camera for raycasting
-    [SerializeField] private float bulletSpeed = 20f;        // Speed of the bullet
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private float bulletSpeed = 20f;
     [SerializeField] private float reloadTime = 3f;
 
     [SerializeField] private GameObject reloadText;
@@ -18,10 +18,10 @@ public class PlayerCombat : MonoBehaviour
 
     private bool hasBullet;
 
-    [SerializeField] private float kickbackAngle = 30f;     // How far to rotate back
-    private float KickbackAngle; // How far to rotate back when shooting
-    [SerializeField] private float kickbackSpeed = 0.05f;   // How fast the kickback happens
-    [SerializeField] private float returnSpeed = 5f;        // How fast it returns
+    [SerializeField] private float kickbackAngle = 30f;
+    private float KickbackAngle;
+    [SerializeField] private float kickbackSpeed = 0.05f;
+    [SerializeField] private float returnSpeed = 5f;
     [SerializeField] private Transform rightArmToKickBack;
 
     private Quaternion originalRotation;
@@ -31,6 +31,17 @@ public class PlayerCombat : MonoBehaviour
     private List<GameObject> bulletsSpawned;
     private Coroutine reloadCoroutine;
     private bool reloading = false;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private float shootSoundVolume = 1f;
+    [SerializeField] private AudioClip reloadSound;
+    [SerializeField] private float reloadSoundVolume = 1f;
+
+    [Header("Punch Settings")]
+    [SerializeField] private float punchCooldown = 0.5f;
+    private float lastPunchTime = -Mathf.Infinity;
+
     public void Initialize()
     {
         bulletsSpawned = new List<GameObject>();
@@ -62,7 +73,8 @@ public class PlayerCombat : MonoBehaviour
         reloadText.SetActive(true);
         ApplyKickback();
 
-        // Raycast from center of screen to determine where player is aiming
+        AudioManager.Instance.PlayOneShot(shootSound, transform.position, shootSoundVolume, true);
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         Vector3 targetPoint;
 
@@ -72,14 +84,11 @@ public class PlayerCombat : MonoBehaviour
         }
         else
         {
-            // If nothing hit, shoot forward from camera
             targetPoint = ray.GetPoint(100f);
         }
 
-        // Calculate direction from firePoint to targetPoint
         Vector3 direction = (targetPoint - firePoint.position).normalized;
 
-        // Instantiate and launch the bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(direction));
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
@@ -92,32 +101,40 @@ public class PlayerCombat : MonoBehaviour
 
     public void Punch()
     {
+        if (Time.time - lastPunchTime < punchCooldown)
+            return;
+
+        lastPunchTime = Time.time;
         leftArmAnimator.SetTrigger("Punch");
     }
 
     public void Reload()
     {
-        if(hasBullet || reloading)
+        if (hasBullet || reloading)
         {
             Debug.Log("Already has a bullet, no need to reload.");
             return;
         }
+
         reloadCoroutine = StartCoroutine(ReloadCoroutine());
     }
 
     public void PickUpBullet()
     {
-        foreach( GameObject bullet in bulletsSpawned)
+        foreach (GameObject bullet in bulletsSpawned)
         {
             Destroy(bullet);
         }
+
+        AudioManager.Instance.PlayOneShot(reloadSound, transform.position, reloadSoundVolume, true);
         bulletsSpawned.Clear();
         reloading = false;
         hasBullet = true;
         reloadBarUI.enabled = false;
         reclaimedText.SetActive(true);
         reloadText.SetActive(false);
-        if(reloadCoroutine != null)
+
+        if (reloadCoroutine != null)
             StopCoroutine(reloadCoroutine);
     }
 
@@ -135,13 +152,8 @@ public class PlayerCombat : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / reloadTime);
-
-            // Fill from 1 to 0
             reloadBarUI.fillAmount = 1f - t;
-
-            // Color from red to green
             reloadBarUI.color = Color.Lerp(Color.red, Color.green, t);
-
             yield return null;
         }
 
@@ -149,10 +161,13 @@ public class PlayerCombat : MonoBehaviour
         hasBullet = true;
         reloading = false;
 
+        AudioManager.Instance.PlayOneShot(reloadSound, transform.position, reloadSoundVolume, true);
+
         foreach (GameObject bullet in bulletsSpawned)
         {
             Destroy(bullet);
         }
+
         bulletsSpawned.Clear();
         Debug.Log("Reloaded");
     }
@@ -162,9 +177,8 @@ public class PlayerCombat : MonoBehaviour
         StartCoroutine(KickbackCoroutine(kickbackAngle));
     }
 
-    private System.Collections.IEnumerator KickbackCoroutine(float kickBackStrength = -15f)
+    private IEnumerator KickbackCoroutine(float kickBackStrength = -15f)
     {
-        // Rotate quickly back (simulate recoil)
         Quaternion kickbackRotation = originalRotation * Quaternion.Euler(-kickbackAngle, 0f, 0f);
         float t = 0f;
 
@@ -175,7 +189,6 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
 
-        // Slowly return to original rotation
         t = 0f;
         while (t < 1f)
         {
@@ -186,5 +199,4 @@ public class PlayerCombat : MonoBehaviour
 
         rightArmToKickBack.localRotation = originalRotation;
     }
-
 }
