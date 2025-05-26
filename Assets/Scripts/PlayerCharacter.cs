@@ -74,6 +74,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     [SerializeField] private Camera cam;
     [SerializeField] private float defaultFov = 60f; // Default FOV
+    public void SetDefaultFOV(float fov)
+    {
+        Debug.Log($"Setting default FOV to {fov}"); // Debug log for setting default FOV
+        defaultFov = fov; // Method to set default FOV
+
+        cam.fieldOfView = defaultFov; // Update camera FOV when setting default FOV
+    }
+    public float GetCurrentFOV() => defaultFov; // Method to get current FOV
     [SerializeField] private float aimingFov = 30f; // Default FOV
 
     [SerializeField] private Animator leftArmAnimator;
@@ -106,6 +114,18 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private Collider[] uncrouchOverlapResults;
 
     [SerializeField] private AudioClip slidingClip;
+
+    private bool adaptiveFOV = false; // Whether to adapt FOV based on speed
+    public void ToggleAdaptiveFov(bool toggle)
+    {
+        adaptiveFOV = toggle;
+
+        if(!adaptiveFOV)
+        {
+            cam.fieldOfView = defaultFov; // Reset to default FOV when toggled off
+        }
+
+    }
 
     public void Initialize()
     {
@@ -486,15 +506,19 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         }
 
-        // we'll assume 70 magnitude is the max speed for our FOV changed, can be tweaked
-        var fovChange = Mathf.Min(currentVelocity.magnitude, 70f);
-        var targetFov = (requestedAiming ? aimingFov : defaultFov) + fovChange;
-        cam.fieldOfView = Mathf.Lerp
-        (
-            a: cam.fieldOfView,
-            b: targetFov,
-            t: 1f - Mathf.Exp(-10 * deltaTime) // This is better at staying frame rate independent than this: walkResponse * deltaTime
-        );
+        if(adaptiveFOV)
+        {
+            // we'll assume 70 magnitude is the max speed for our FOV changed, can be tweaked
+            var fovChange = Mathf.Min(currentVelocity.magnitude, 70f);
+            var targetFov = (requestedAiming ? aimingFov : defaultFov) + fovChange;
+            cam.fieldOfView = Mathf.Lerp
+            (
+                a: cam.fieldOfView,
+                b: targetFov,
+                t: 1f - Mathf.Exp(-10 * deltaTime) // This is better at staying frame rate independent than this: walkResponse * deltaTime
+            );
+        }
+
         if (currentVelocity.magnitude > 0.1f)
         {
 

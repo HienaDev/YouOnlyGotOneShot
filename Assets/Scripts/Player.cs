@@ -18,6 +18,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject settings;
 
+    private bool cameraLeanEnabled = true;
+    public void ToggleCameraLean(bool toggle)
+    {
+        cameraLeanEnabled = toggle;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -108,9 +114,14 @@ public class Player : MonoBehaviour
         var deltaTime = Time.deltaTime;
         var state = playerCharacter.State;
 
-        cameraSpring.UpdateSpring(deltaTime, playerCharacter.CameraTarget.up);
-        cameraLean.UpdateLean(deltaTime, state.Stance is Stance.Slide ,state.Acceleration ,playerCharacter.CameraTarget.up);
-    
+        Debug.Log("Camera lean enabled: " + cameraLeanEnabled); 
+        if (cameraLeanEnabled)
+        {
+            cameraSpring.UpdateSpring(deltaTime, playerCharacter.CameraTarget.up);
+            cameraLean.UpdateLean(deltaTime, state.Stance is Stance.Slide, state.Acceleration, playerCharacter.CameraTarget.up);
+
+        }
+
         stanceVignette.UpdateVignette(deltaTime, state.Stance);
     }
 
